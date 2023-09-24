@@ -18,14 +18,14 @@ import java.util.Optional;
 public class MovieController {
     private final MovieService movieService;
 
-    @ResponseStatus(HttpStatus.OK) // TODO: hata durumunda ResponseStatus'u nasıl yönetiyoruz, öğrenelim!
+    // TODO: hata durumunda ResponseStatus'u nasıl yönetiyoruz, öğrenelim!
     @GetMapping()
     public List<Movie> getAll() {
         log.info("get movies endpoint'ine istek atılıyor");
         return movieService.GetMovies();
     }
 
-    @ResponseStatus(HttpStatus.OK)
+
     @GetMapping("{id}")
     public Optional<Movie> getWithId(@PathVariable int id) {
         log.info("get movies{id} endpoint'ine istek atılıyor");
