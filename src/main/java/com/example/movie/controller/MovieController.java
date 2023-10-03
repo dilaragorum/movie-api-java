@@ -21,7 +21,6 @@ public class MovieController {
     // TODO: hata durumunda ResponseStatus'u nasıl yönetiyoruz, öğrenelim!
     @GetMapping()
     public List<Movie> getAll() {
-        log.info("get movies endpoint'ine istek atılıyor");
         return movieService.GetMovies();
     }
 
