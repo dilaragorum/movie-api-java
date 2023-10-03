@@ -78,7 +78,9 @@ public class MovieControllerTest {
 
     @Test
     void create_movie_successfully() throws Exception {
+        // Given
         Movie movie = Movie.builder().title("test").score(10).id(1).releaseYear("25/07/1994").build();
+
         // When
         ResultActions test = mockMvc.perform(post(BASE_URL).contentType(MediaType.APPLICATION_JSON).
                 content(objectMapper.writeValueAsString(movie))).andExpect(status().isCreated());
