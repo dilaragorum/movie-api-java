@@ -18,7 +18,6 @@ import java.util.Optional;
 public class MovieController {
     private final MovieService movieService;
 
-    // TODO: hata durumunda ResponseStatus'u nasıl yönetiyoruz, öğrenelim!
     @GetMapping()
     public List<Movie> getAll() {
         return movieService.GetMovies();
