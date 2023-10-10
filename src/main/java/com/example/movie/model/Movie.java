@@ -17,7 +17,11 @@ public class Movie {
     private String releaseYear;
     private float score;
 
+    public MovieDto toDto(String quote) {
+       return MovieDto.builder().id(id).title(title).releaseYear(releaseYear).score(score).quote(quote).build();
+
+    }
     public String toString() {
-        return "id: " + id + " title: " + title + " releaseYear: " + releaseYear + " score: "+ score;
+        return String.format("id: %d, title: %s, release year: %s, score: %f", id, title, releaseYear, score);
     }
 }

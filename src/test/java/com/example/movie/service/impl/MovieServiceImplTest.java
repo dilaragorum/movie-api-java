@@ -1,7 +1,10 @@
 package com.example.movie.service.impl;
 
+import com.example.movie.client.model.response.PlaceHolderResponse;
 import com.example.movie.exception.NotFoundException;
 import com.example.movie.model.Movie;
+import com.example.movie.model.MovieDto;
+import com.example.movie.proxy.PlaceHolderProxy;
 import com.example.movie.repository.MovieRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,9 +30,14 @@ public class MovieServiceImplTest {
     @Mock
     private MovieRepository movieRepository;
 
+    @Mock
+    private PlaceHolderProxy placeHolderProxy;
+
     private Movie movie;
 
     private List<Movie> movies;
+
+    private MovieDto movieDto;
 
     @BeforeEach
     void setUp() {
@@ -38,6 +46,10 @@ public class MovieServiceImplTest {
                 Movie.builder().releaseYear("25/07/1994").id(1).score(30).title("exampleMovie").build(),
                 Movie.builder().releaseYear("06/01/2023").id(2).score(60).title("exampleMovie2").build()
         );
+        movieDto = MovieDto.builder().releaseYear("25/07/1994").id(1).score(30).title("exampleMovie").quote("quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto").build();
+
+        PlaceHolderResponse placeHolderResponse = PlaceHolderResponse.builder().userId(1).id(1).title("exampleTitle").
+                body("quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto").build();
     }
 
     @Test
@@ -56,13 +68,17 @@ public class MovieServiceImplTest {
     void it_should_return_movie_successfully_when_movie_can_be_found() {
         // given
         when(movieRepository.Get(anyInt())).thenReturn(Optional.ofNullable(movie));
+        PlaceHolderResponse placeHolderResponse = PlaceHolderResponse.builder().userId(1).id(1).title("exampleTitle").
+                body("quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto").build();
+        when(placeHolderProxy.GetQuote(anyString())).thenReturn(placeHolderResponse);
+
 
         // when
-        Optional<Movie> expectedResponse = _sut.GetMovie(1);
+        Optional<MovieDto> actualResponse = _sut.GetMovie(1);
 
         // then
         verify(movieRepository).Get(anyInt());
-        assertEquals(expectedResponse, Optional.ofNullable(movie));
+        assertEquals(actualResponse, Optional.ofNullable(movieDto));
     }
 
     @Test

@@ -1,6 +1,7 @@
 package com.example.movie.controller;
 
 import com.example.movie.model.Movie;
+import com.example.movie.model.MovieDto;
 import com.example.movie.service.MovieService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -8,8 +9,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -20,6 +23,7 @@ import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 
 @WebMvcTest(controllers = MovieController.class)
@@ -38,7 +42,7 @@ public class MovieControllerTest {
     private ObjectMapper objectMapper;
 
     @Test
-    void get_movie_successfully() throws Exception {
+    void get_movies_successfully() throws Exception {
         // Given
         Movie movie1 = Movie.builder().title("test").score(10).id(1).releaseYear("25/07/1994").build();
         Movie movie2 = Movie.builder().title("test").score(10).id(1).releaseYear("25/07/1994").build();
@@ -57,13 +61,13 @@ public class MovieControllerTest {
     }
 
     @Test
-    void get_movies_successfully() throws Exception {
+    void get_movie_successfully() throws Exception {
         // Given
         String url = BASE_URL + "/1";
 
         // When
         ResultActions test = mockMvc.perform(get(url).contentType(MediaType.APPLICATION_JSON).
-                content(Movie.builder().title("test").score(10).id(1).releaseYear("25/07/1994").toString())).andExpect(status().isOk());
+                content(MovieDto.builder().title("test").score(10).id(1).releaseYear("25/07/1994").quote("testQuote").toString())).andExpect(status().isOk());
 
         // Then
         verify(movieService).GetMovie(1);
