@@ -27,6 +27,8 @@ public class MovieServiceImpl implements MovieService {
 
     private final MovieEventProducer movieEventProducer;
 
+    private final MovieMapper movieMapper;
+
     @Value("${topic.name.producer}")
     private String topicName;
 
@@ -53,7 +55,7 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public void CreateMovie(Movie movie) {
         movieRepository.Post(movie);
-        MovieCreatedEvent movieCreatedEvent = MovieMapper.MAPPER.mapToMovieCreatedEvent(movie);
+        MovieCreatedEvent movieCreatedEvent = movieMapper.mapToMovieCreatedEvent(movie);
         KafkaMessage<MovieCreatedEvent> createdEvent = KafkaMessage.<MovieCreatedEvent>builder().topic(topicName).body(movieCreatedEvent).build();
         movieEventProducer.send(createdEvent);
     }
