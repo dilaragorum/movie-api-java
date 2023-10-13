@@ -14,8 +14,10 @@ import org.springframework.stereotype.Service;
 public class MovieEventProducer {
     private final KafkaTemplate<String, String> kafkaTemplate;
 
+    private final JsonConverter jsonConverter;
+
     public <T> void send(KafkaMessage <T> kafkaMessage){
-        String message = JsonConverter.objectToJson(kafkaMessage.getBody());
+        String message = jsonConverter.objectToJson(kafkaMessage.getBody());
         kafkaTemplate.send(kafkaMessage.getTopic(), message);
     }
 }

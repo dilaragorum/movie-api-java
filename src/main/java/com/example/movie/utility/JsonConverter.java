@@ -1,21 +1,21 @@
 package com.example.movie.utility;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.experimental.UtilityClass;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
-@UtilityClass
+
+@Component
+@AllArgsConstructor
 public class JsonConverter {
+
+    private final ObjectMapper objectMapper;
+
     public String objectToJson(Object object) {
         if (object != null && String.class.isAssignableFrom(object.getClass())) {
             return (String) object;
         }
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
 
         try {
             return objectMapper.writeValueAsString(object);

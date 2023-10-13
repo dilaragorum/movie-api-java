@@ -11,8 +11,10 @@ import org.springframework.context.annotation.Configuration;
 public class ObjectMapperConfiguration {
     @Bean
     public ObjectMapper objectMapper() {
+
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         return objectMapper;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.movie.kafka.event;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
