@@ -2,6 +2,7 @@ package com.example.movie.service.impl;
 
 import com.example.movie.client.model.response.PlaceHolderResponse;
 import com.example.movie.exception.NotFoundException;
+import com.example.movie.kafka.producer.MovieEventProducer;
 import com.example.movie.model.Movie;
 import com.example.movie.model.MovieDto;
 import com.example.movie.proxy.PlaceHolderProxy;
@@ -32,6 +33,9 @@ public class MovieServiceImplTest {
 
     @Mock
     private PlaceHolderProxy placeHolderProxy;
+
+    @Mock
+    private MovieEventProducer movieEventProducer;
 
     private Movie movie;
 

@@ -5,7 +5,9 @@ import com.example.movie.model.Movie;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface MovieMapper {
+    MovieMapper MAPPER = Mappers.getMapper(MovieMapper.class);
+
     MovieCreatedEvent mapToMovieCreatedEvent(Movie movie);
 }
